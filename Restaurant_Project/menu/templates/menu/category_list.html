@@ -1,0 +1,33 @@
+{% extends "menu/base.html" %}
+
+{% block title %}Categories - Restaurant Menu{% endblock %}
+
+{% block content %}
+<h1>Menu Categories</h1>
+
+<div style="background-color: #ecf0f1; padding: 1rem; border-radius: 4px; margin-bottom: 2rem;">
+    <p>📌 <strong>Note:</strong> Manage categories from the <a href="/admin/">admin panel</a>.</p>
+</div>
+
+{% if categories %}
+    <div class="grid">
+        {% for category in categories %}
+            <div class="card" style="text-align: center; border-top: 4px solid #3498db;">
+                <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+                    {% if category.name == "Starter" %}🥗
+                    {% elif category.name == "Main" %}🍽️
+                    {% elif category.name == "Dessert" %}🍰
+                    {% elif category.name == "Beverage" %}🍷
+                    {% else %}📂{% endif %}
+                </div>
+                <h3>{{ category.name }}</h3>
+                <p style="color: #7f8c8d;">Items in this category</p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card">
+        <p>No categories yet. Create categories from the <a href="/admin/">admin panel</a>.</p>
+    </div>
+{% endif %}
+{% endblock %}

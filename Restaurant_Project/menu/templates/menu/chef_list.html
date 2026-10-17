@@ -1,0 +1,31 @@
+{% extends "menu/base.html" %}
+
+{% block title %}Chefs - Restaurant Menu{% endblock %}
+
+{% block content %}
+<div class="grid-header">
+    <h1>Our Chefs</h1>
+    <a href="{% url 'chef-add' %}" class="btn btn-success">+ Add New Chef</a>
+</div>
+
+{% if chefs %}
+    <div class="grid">
+        {% for chef in chefs %}
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">👨‍🍳</div>
+                <h3>{{ chef.name }}</h3>
+                
+                {% if chef.specialization %}
+                    <p style="color: #7f8c8d; font-style: italic;">{{ chef.specialization }}</p>
+                {% else %}
+                    <p style="color: #bdc3c7; font-style: italic;">No specialization listed</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card">
+        <p>No chefs yet. <a href="{% url 'chef-add' %}">Add one!</a></p>
+    </div>
+{% endif %}
+{% endblock %}

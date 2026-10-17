@@ -1,0 +1,56 @@
+{% extends "menu/base.html" %}
+
+{% block title %}Home - Restaurant Menu{% endblock %}
+
+{% block content %}
+<h1>Welcome to Our Restaurant 🍽️</h1>
+<p>Explore our delicious menu and discover your favorite dishes</p>
+
+<h2>Featured Items</h2>
+
+{% if featured_items %}
+    <div class="grid">
+        {% for item in featured_items %}
+            <div class="card">
+                <h3>{{ item.name }}</h3>
+                
+                {% if item.category %}
+                    <p><strong>Category:</strong> {{ item.category.name }}</p>
+                {% endif %}
+                
+                {% if item.chef %}
+                    <p><strong>Chef:</strong> {{ item.chef.name }}</p>
+                {% endif %}
+                
+                <p style="font-size: 1.5rem; color: #27ae60; margin: 1rem 0;">
+                    <strong>₹{{ item.price }}</strong>
+                </p>
+                
+                {% if item.is_available %}
+                    <span style="color: green; font-weight: bold;">✓ Available</span>
+                {% else %}
+                    <span style="color: red; font-weight: bold;">✗ Not Available</span>
+                {% endif %}
+                
+                {% if item.description %}
+                    <p style="margin-top: 1rem;">{{ item.description }}</p>
+                {% endif %}
+                
+                <form method="post" action="{% url 'menu-detail' %}" style="margin-top: 1rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="menu_item_id" value="{{ item.id }}">
+                    <button type="submit" class="btn btn-success">View Details</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card">
+        <p>No items available yet. Please come back soon!</p>
+    </div>
+{% endif %}
+
+<div style="text-align: center; margin-top: 2rem;">
+    <a href="{% url 'menu-list' %}" class="btn btn-success">View Full Menu</a>
+</div>
+{% endblock %}

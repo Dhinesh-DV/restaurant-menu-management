@@ -1,0 +1,53 @@
+{% extends "menu/base.html" %}
+
+{% block title %}Menu - Restaurant Menu{% endblock %}
+
+{% block content %}
+<div class="grid-header">
+    <h1>Our Menu</h1>
+    <a href="{% url 'menu-add' %}" class="btn btn-success">+ Add New Item</a>
+</div>
+
+{% if menu_items %}
+    <table>
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Chef</th>
+                <th>Price</th>
+                <th>Available</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in menu_items %}
+                <tr>
+                    <td><strong>{{ item.name }}</strong></td>
+                    <td>{{ item.category.name|default:"N/A" }}</td>
+                    <td>{{ item.chef.name|default:"N/A" }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>
+                        {% if item.is_available %}
+                            <span style="color: green; font-weight: bold;">✓ Yes</span>
+                        {% else %}
+                            <span style="color: red; font-weight: bold;">✗ No</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form method="post" action="{% url 'menu-detail' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="menu_item_id" value="{{ item.id }}">
+                            <button type="submit" class="btn btn-small">View</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="card">
+        <p>No menu items yet. <a href="{% url 'menu-add' %}">Add the first one!</a></p>
+    </div>
+{% endif %}
+{% endblock %}

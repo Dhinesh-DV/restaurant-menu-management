@@ -1,0 +1,51 @@
+{% extends "menu/base.html" %}
+
+{% block title %}{{ menu_item.name }} - Restaurant Menu{% endblock %}
+
+{% block content %}
+<h1>{{ menu_item.name }}</h1>
+
+<div class="card" style="max-width: 600px;">
+    <p>
+        <strong>Price:</strong> 
+        <span style="font-size: 1.5rem; color: #27ae60; font-weight: bold;">
+            ${{ menu_item.price }}
+        </span>
+    </p>
+    
+    {% if menu_item.category %}
+        <p><strong>Category:</strong> {{ menu_item.category.name }}</p>
+    {% endif %}
+    
+    {% if menu_item.chef %}
+        <p>
+            <strong>Chef:</strong> {{ menu_item.chef.name }}
+            {% if menu_item.chef.specialization %}
+                <br><small>({{ menu_item.chef.specialization }})</small>
+            {% endif %}
+        </p>
+    {% endif %}
+    
+    {% if menu_item.description %}
+        <p>
+            <strong>Description:</strong>
+            <br>
+            {{ menu_item.description }}
+        </p>
+    {% endif %}
+    
+    <p>
+        <strong>Availability:</strong> 
+        {% if menu_item.is_available %}
+            <span style="color: green; font-weight: bold;">✓ Available</span>
+        {% else %}
+            <span style="color: red; font-weight: bold;">✗ Not Available</span>
+        {% endif %}
+    </p>
+    
+    <div style="margin-top: 2rem;">
+        <a href="{% url 'menu-list' %}" class="btn">← Back to Menu</a>
+        <a href="{% url 'home' %}" class="btn btn-success">Home</a>
+    </div>
+</div>
+{% endblock %}
