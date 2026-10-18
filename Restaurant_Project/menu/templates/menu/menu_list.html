@@ -1,4 +1,4 @@
-{% extends "menu/base.html" %}
+    {% extends "menu/base.html" %}
 
 {% block title %}Menu - Restaurant Menu{% endblock %}
 
@@ -26,7 +26,7 @@
                     <td><strong>{{ item.name }}</strong></td>
                     <td>{{ item.category.name|default:"N/A" }}</td>
                     <td>{{ item.chef.name|default:"N/A" }}</td>
-                    <td>${{ item.price }}</td>
+                    <td>₹{{ item.price }}</td>
                     <td>
                         {% if item.is_available %}
                             <span style="color: green; font-weight: bold;">✓ Yes</span>
